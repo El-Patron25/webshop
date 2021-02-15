@@ -1,0 +1,57 @@
+--  DATABASE AND TABLE QUERIES
+
+CREATE DATABASE IF NOT EXISTS hengelsport;
+
+CREATE TABLE IF NOT EXISTS admin
+(
+	id INT(22) AUTO_INCREMENT,
+	gebruikersnaam VARCHAR(255) NOT NULL,
+	wachtwoord VARCHAR(255) NOT NULL,
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS filiaal
+(
+	id INT(22) AUTO_INCREMENT,
+	plaats VARCHAR(255) UNIQUE NOT NULL,
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS product
+(
+	id INT (22) AUTO_INCREMENT,
+	omschrijving VARCHAR(255) UNIQUE NOT NULL,
+	afbeelding TEXT UNIQUE NOT NULL,
+	type VARCHAR(255) NOT NULL,
+	fabriek VARCHAR(255) NOT NULL,
+	aantal INT(22) NOT NULL,
+	inkoop_waarde VARCHAR(255) NOT NULL,
+	verkoop_waarde VARCHAR(255) NOT NULL,
+	filiaal_id INT(22) NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY (filiaal_id) REFERENCES filiaal(id)
+);
+
+CREATE TABLE IF NOT EXISTS medewerker
+(
+	id INT(22) AUTO_INCREMENT,
+	voornaam VARCHAR(255) NOT NULL,
+	tussenvoegsel VARCHAR(255) NOT NULL,
+	achternaam VARCHAR(255) NOT NULL,
+	gebruikersnaam VARCHAR (255) UNIQUE NOT NULL,
+	wachtwoord VARCHAR (255) NOT NULL,
+	filiaal_id INT (22) NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY (filiaal_id) REFERENCES filiaal (id)
+);
+
+
+CREATE TABLE IF NOT EXISTS voorraad
+(
+	id INT(22) AUTO_INCREMENT,
+	product_id INT(22) NOT NULL,
+	filiaal_id INT (22) NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY (product_id) REFERENCES product(id),
+	FOREIGN KEY (filiaal_id) REFERENCES filiaal(id)
+); 
